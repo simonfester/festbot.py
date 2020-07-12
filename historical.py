@@ -2,6 +2,7 @@
 
 from datetime import datetime
 import requests                     # https://requests.readthedocs.io/en/master/user/quickstart/
+import json
 
 timeout = 10 # for the request request
 
@@ -10,6 +11,11 @@ symbol = 'BTCUSDT'
 interval = '1d'
 start_time = 0    # start time in ms
 limit = 1
+
+# params for our request
+
+payload = {'symbol': symbol, 'interval': interval, 'limit': limit, 'startTime': start_time}
+
 
 # urls
 base_url = 'https://api.binance.com'   # base url, all others start from here
@@ -37,11 +43,10 @@ def get_server_time():
 # get symbol start time
 
 def get_symbol_start_time():
-     klines = requests.get(base_url+get_klines, params={'symbol': symbol, 'interval': interval, 'limit': limit, 'startTime': start_time}, timeout = timeout)
-     return(klines.json())
+     r = requests.get(base_url+get_klines, params = payload, timeout = timeout)
+     return r.text[0][0]
 
-start_time = get_symbol_start_time()[0]
-print(start_time[0])
+print(get_symbol_start_time())
 
 # kline json return structure
 
