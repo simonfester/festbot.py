@@ -1,3 +1,4 @@
 *.env
 *.cfg
 /data
+__pycache
