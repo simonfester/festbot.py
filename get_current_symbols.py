@@ -1,11 +1,13 @@
 from binance.client import Client
-client = Client('','')
+import sys
+import json
+from datetime import date
 
-#hack for now ... index_length = (len(supported_symbols['symbols'][856]))
+client = Client('','') # public api, so leave empty
 
 def get_current_symbols():
     index = 0
-    index_length = 856 
+    index_length = 856 #hack for now, should get length automatically
     list = []
     supported_symbols = client.get_exchange_info()
     while index < index_length:
@@ -14,7 +16,12 @@ def get_current_symbols():
     return(list)
 
 current = get_current_symbols()
-print(current)
+
+# write out to json file
+
+f = open("data/binance_symbols.json","w")
+f.write(json.dumps(current))
+f.close()
 
 
 
