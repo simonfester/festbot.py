@@ -1,16 +1,17 @@
 import os
 import sys
 import json
+import configparser
 
+from datetime import date
 from binance.client import Client
-from dotenv import load_dotenv
-from helpers import date_to_milliseconds
+from helpers import date_to_milliseconds # need helpers.py in the same folder to work
 
-project_folder = os.path.expanduser('~/pyhton')  # adjust as appropriate
-load_dotenv(os.path.join(project_folder, '.env'))
+config = configparser.ConfigParser()
+config.read('festbot.cfg')
 
-api_key = os.getenv("api_key")
-api_secret = os.getenv("api_secret")
+api_key=config['binance']['api_key']
+api_secret=config['binance']['api_secret']
 
 client = Client(api_key, api_secret)
 
@@ -24,8 +25,9 @@ while index < index_length:
     index = index + 1
 
 start = "1 Dec, 2017"
-end = "2 Dec, 2017"
-interval = Client.KLINE_INTERVAL_30MINUTE
+end = date.today()
+print(end)
+interval = Client.KLINE_INTERVAL_1DAY
 
 # get symbol
 
@@ -39,7 +41,7 @@ klines = client.get_historical_klines(symbol, interval, start, end)
 
 # open a file with filename including symbol, interval and start and end converted to milliseconds
 with open(
-    "Binance_{}_{}_{}-{}.json".format(
+    "data/binance_{}_{}_{}-{}.json".format(
         symbol, 
         interval, 
         date_to_milliseconds(start),
