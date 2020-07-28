@@ -11,13 +11,15 @@ from binance.client import Client
 from helpers import date_to_milliseconds 
 
 # public api, so leave api_key and secret empty
-client = Client('','') 
+client = Client('','')
+from time import time
+time_now_in_ms = int(time() * 1000) 
 
 # options for request
 start = "1 Dec, 2017" # binance opening time
-end = "20 Jul, 2020"
-interval = Client.KLINE_INTERVAL_1DAY
-symbol = "BTCUSDT"
+end = time_now_in_ms
+interval = Client.KLINE_INTERVAL_1HOUR
+symbol = "ETHUSDT"
 
 # get the data from the api
 data = client.get_historical_klines(symbol, interval, start, end)
