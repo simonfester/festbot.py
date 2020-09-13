@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Script to Install Dev environment
+# Script to Install
 
 ### GENERAL LINUX ###
 
@@ -16,8 +16,10 @@ bash Miniconda.sh -b  # installs it
 rm -rf Miniconda.sh  # removes the installer file
 export PATH="/root/miniconda3/bin:$PATH"  # prepends the new path
 
-### INSTALL PYTHON LIBRARIES ###
+### Install Python Libraries  ###
 conda install -y pandas  # installs pandas incl. NumPy
-conda install -y matplotlib  # installs matplotlib
-conda install -y ipython  # installs IPython shell
-conda install -y jupyter  # install Jupyter Notebook
+conda install -y numpy
+conda install -y pytables
+
+### Install Binance
+pip install python-binance
